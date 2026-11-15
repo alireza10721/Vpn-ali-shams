@@ -1,11 +1,11 @@
 
-name: Build ALI SHAMS VPN from ZIP
+name: Build ALI SHAMS VPN
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - 'ALI_SHAMS_VPN_3.5_SHARE.zip'
+      - 'ALI_SHAMS_VPN_3.5_FIXED_BULK.zip'
       - '.github/workflows/main.yml'
 
 permissions:
@@ -30,10 +30,10 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Extract ZIP
+      - name: Extract Project
         run: |
           mkdir -p android-project
-          unzip -q ALI_SHAMS_VPN_3.5_SHARE.zip -d android-project
+          unzip -q ALI_SHAMS_VPN_3.5_FIXED_BULK.zip -d android-project
           test -f android-project/app/build.gradle.kts
 
       - name: Build APK
@@ -43,6 +43,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: ALI-SHAMS-VPN-3.5-APK
+          name: ALI-SHAMS-VPN-APK
           path: android-project/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
